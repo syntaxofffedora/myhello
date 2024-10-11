@@ -1,12 +1,19 @@
 package hello_test
 
 import (
+	"bytes"
 	"testing"
 
 	hello "github.com/syntaxofffedora/myhello"
 )
 
-func TestPrintPrintsHelloMessageToTerminal(t *testing.T) {
+func TestPrintTo_PrintsHelloMessageToGivenWriter(t *testing.T) {
 	t.Parallel()
-	hello.Print()
+	buf := new(bytes.Buffer)
+	hello.PrintTo(buf)
+	want := "Hello, world\n"
+	got := buf.String()
+	if want != got {
+		t.Errorf("want %q, got %q", want, got)
+	}
 }
